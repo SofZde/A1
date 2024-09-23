@@ -21,15 +21,15 @@ function scoreUpdate(resultat)
 {
   if(resultat === "DU VANN!")
   {
-    ++scoreW;
+    scoreW++;
   }
   else if(resultat === "DU FÖRLORADE!")
   {
-    ++scoreL;
+    scoreL++;
   }
   else
   {
-    ++scoreD;
+    scoreD++;
   }
 
 }
@@ -51,9 +51,9 @@ function displayResultat(spelareVal, datorVal, resultat)
 function spela(spelareVal)
 {
 const datorVal = getRandomVal();
-let resultat ="";
+let resultat =""; // deklarera resultat tilldelar tomt värde
 
-const outcomes =
+const outcomes = // skapar olika utfall baserat på spelare och dator värdet
 {
   "sten" : {"sax": "DU VANN!" , "påse" : "DU FÖRLORADE!"},
   "sax": { "påse": "DU VANN!", "sten": "DU FÖRLORADE!" },
