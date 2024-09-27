@@ -1,8 +1,33 @@
-const val = ["sten", "sax", "påse"]; //min lista med arrays (olika val)
-let scoreW = 0; let scoreL = 0;let scoreD = 0; // To print scoreboard
+const val = ["sten", "sax", "påse"]; // List of possible choices
 
-//get display elements :
+// Function to set a cookie
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
 
+// Function to get a cookie value by name
+function getCookie(cname) {
+  const name = cname + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i].trim();
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+// Initialize scores from cookies or set default to 0
+let scoreW = parseInt(getCookie("scoreW")) || 0;
+let scoreL = parseInt(getCookie("scoreL")) || 0;
+let scoreD = parseInt(getCookie("scoreD")) || 0; // Also track number of draws
+
+// Get display elements from the DOM
 const spelareDisplay = document.getElementById("spelareDisplay");
 const datorDisplay = document.getElementById("datorDisplay");
 const resultatDisplay = document.getElementById("resultatDisplay");
@@ -10,65 +35,56 @@ const resultatW = document.getElementById("resultatW");
 const resultatL = document.getElementById("resultatL");
 const resultatD = document.getElementById("resultatD");
 
-// skapa funktion för random indexplats i val (datorns val)
-function getRandomVal()
-{
-  return val[Math.floor(Math.random() * val.length)]; // val.lenght = antal indexplatser i listan.
-
+// Function to generate a random computer choice
+function getRandomVal() {
+  return val[Math.floor(Math.random() * val.length)];
 }
-// skapa en funktion för att uppdatera resultatet(score) efter varje runda.
-function scoreUpdate(resultat)
-{
-  if(resultat === "DU VANN!")
-  {
+
+// Function to update the score and save to cookies
+function scoreUpdate(resultat) {
+  if (resultat === "DU VANN!") {
     scoreW++;
-  }
-  else if(resultat === "DU FÖRLORADE!")
-  {
+    setCookie("scoreW", scoreW, 30); // Save wins to cookies
+  } else if (resultat === "DU FÖRLORADE!") {
     scoreL++;
-  }
-  else
-  {
+    setCookie("scoreL", scoreL, 30); // Save losses to cookies
+  } else {
     scoreD++;
+    setCookie("scoreD", scoreD, 30); // Save draws to cookies
+  }
+}
+
+// Function to display the result and score
+function displayResult(spelareVal, datorVal, result) {
+  spelareDisplay.innerHTML = `Du valde: ${spelareVal}`;
+  datorDisplay.innerHTML = `Datorn valde: ${datorVal}`;
+  resultatDisplay.innerHTML = result;
+  resultatW.innerHTML = `Antal vinster: ${scoreW}`;
+  resultatL.innerHTML = `Antal förluster: ${scoreL}`;
+  resultatD.innerHTML = `Antal oavgjorda: ${scoreD}`;
+}
+
+// Function to play the game
+function playGame(spelareVal) {
+  const datorVal = getRandomVal();
+  let result;
+
+  // Determine the result
+  if (spelareVal === datorVal) {
+    result = "Oavgjort!";
+  } else if (
+    (spelareVal === "sten" && datorVal === "sax") ||
+    (spelareVal === "sax" && datorVal === "påse") ||
+    (spelareVal === "påse" && datorVal === "sten")
+  ) {
+    result = "DU VANN!";
+  } else {
+    result = "DU FÖRLORADE!";
   }
 
-}
+  // Update the score based on the result
+  scoreUpdate(result);
 
-
-// skapa en funktion som displayar val, resultat och score.
-function displayResultat(spelareVal, datorVal, resultat)
-{
-  spelareDisplay.textContent = `SPELARE: ${spelareVal}`; // spelarens val = button oncklick
-  datorDisplay.textContent = `DATOR: ${datorVal}`; // datornVal = get random value from list : Val
-  resultatDisplay.textContent = resultat; // skapa villkor
-  resultatW.textContent = `VINSTER: ${scoreW}`;
-  resultatL.textContent = `FÖRLUSTER: ${scoreL}`;
-  resultatD.textContent = `OAVGJORT: ${scoreD}`;
-
-
-}
-// skapa funktion för att spela spelet: hämta spelarens val och datorns val.
-function spela(spelareVal)
-{
-const datorVal = getRandomVal();
-let resultat =""; // deklarera resultat tilldelar tomt värde
-
-const outcomes = // skapar olika utfall baserat på spelare och dator värdet
-{
-  "sten" : {"sax": "DU VANN!" , "påse" : "DU FÖRLORADE!"},
-  "sax": { "påse": "DU VANN!", "sten": "DU FÖRLORADE!" },
-  "påse": { "sten": "DU VANN!", "sax": "DU FÖRLORADE!" }
-};
-if (spelareVal=== datorVal)
-{
-  resultat = "OAVGJORT";
-}
-else
-{
- resultat = outcomes [spelareVal] [datorVal];
-}
-
-  scoreUpdate(resultat);
-displayResultat(spelareVal, datorVal, resultat);
-
+  // Display the updated result and score
+  displayResult(spelareVal, datorVal, result);
 }
