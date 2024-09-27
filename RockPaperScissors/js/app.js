@@ -25,7 +25,7 @@ function getCookie(cname) {
 // Initialize scores from cookies or set default to 0
 let scoreW = parseInt(getCookie("scoreW")) || 0;
 let scoreL = parseInt(getCookie("scoreL")) || 0;
-let scoreD = parseInt(getCookie("scoreD")) || 0; // Also track number of draws
+let scoreD = parseInt(getCookie("scoreD")) || 0; 
 
 // Get display elements from the DOM
 const spelareDisplay = document.getElementById("spelareDisplay");
@@ -44,13 +44,13 @@ function getRandomVal() {
 function scoreUpdate(resultat) {
   if (resultat === "DU VANN!") {
     scoreW++;
-    setCookie("scoreW", scoreW, 30); // Save wins to cookies
+    setCookie("scoreW", scoreW, 1); // Save wins to cookies
   } else if (resultat === "DU FÖRLORADE!") {
     scoreL++;
-    setCookie("scoreL", scoreL, 30); // Save losses to cookies
+    setCookie("scoreL", scoreL, 1); // Save losses to cookies
   } else {
     scoreD++;
-    setCookie("scoreD", scoreD, 30); // Save draws to cookies
+    setCookie("scoreD", scoreD, 1); // Save draws to cookies
   }
 }
 
