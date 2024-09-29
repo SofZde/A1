@@ -1,4 +1,4 @@
-const val = ["sten", "sax", "påse"]; // List of possible choices
+const choices = ["sten", "sax", "påse"]; // List of possible choices
 
 // Function to set a cookie
 function setCookie(cname, cvalue, exdays) {
@@ -25,7 +25,7 @@ function getCookie(cname) {
 // Initialize scores from cookies or set default to 0
 let scoreW = parseInt(getCookie("scoreW")) || 0;
 let scoreL = parseInt(getCookie("scoreL")) || 0;
-let scoreD = parseInt(getCookie("scoreD")) || 0; 
+let scoreD = parseInt(getCookie("scoreD")) || 0;
 
 // Get display elements from the DOM
 const spelareDisplay = document.getElementById("spelareDisplay");
@@ -36,8 +36,8 @@ const resultatL = document.getElementById("resultatL");
 const resultatD = document.getElementById("resultatD");
 
 // Function to generate a random computer choice
-function getRandomVal() {
-  return val[Math.floor(Math.random() * val.length)];
+function getRandomChoice() {
+  return choices[Math.floor(Math.random() * choices.length)];
 }
 
 // Function to update the score and save to cookies
@@ -66,7 +66,7 @@ function displayResult(spelareVal, datorVal, result) {
 
 // Function to play the game
 function playGame(spelareVal) {
-  const datorVal = getRandomVal();
+  const datorVal = getRandomChoice();
   let result;
 
   // Determine the result
