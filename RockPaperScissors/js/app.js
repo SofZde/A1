@@ -44,13 +44,13 @@ function getRandomChoice() {
 function scoreUpdate(resultat) {
   if (resultat === "DU VANN!") {
     scoreW++;
-    setCookie("scoreW", scoreW, 1); // Save wins to cookies
+    setCookie("scoreW", scoreW, 30); // Save wins to cookies
   } else if (resultat === "DU FÖRLORADE!") {
     scoreL++;
-    setCookie("scoreL", scoreL, 1); // Save losses to cookies
+    setCookie("scoreL", scoreL, 30); // Save losses to cookies
   } else {
     scoreD++;
-    setCookie("scoreD", scoreD, 1); // Save draws to cookies
+    setCookie("scoreD", scoreD, 30); // Save draws to cookies
   }
 }
 
