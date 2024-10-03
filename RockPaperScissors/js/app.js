@@ -1,5 +1,13 @@
 const choices = ["sten", "sax", "påse"]; // List of possible choices
 
+// Get display elements from the documents
+const spelareDisplay = document.getElementById("spelareDisplay");
+const datorDisplay = document.getElementById("datorDisplay");
+const resultatDisplay = document.getElementById("resultatDisplay");
+const resultatW = document.getElementById("resultatW");
+const resultatL = document.getElementById("resultatL");
+const resultatD = document.getElementById("resultatD");
+
 // Function to set a cookie
 function setCookie(cname, cvalue, exdays) {
   const d = new Date();
@@ -27,13 +35,6 @@ let scoreW = parseInt(getCookie("scoreW")) || 0;
 let scoreL = parseInt(getCookie("scoreL")) || 0;
 let scoreD = parseInt(getCookie("scoreD")) || 0;
 
-// Get display elements from the documents
-const spelareDisplay = document.getElementById("spelareDisplay");
-const datorDisplay = document.getElementById("datorDisplay");
-const resultatDisplay = document.getElementById("resultatDisplay");
-const resultatW = document.getElementById("resultatW");
-const resultatL = document.getElementById("resultatL");
-const resultatD = document.getElementById("resultatD");
 
 // Function to generate a random computer choice from array choices
 function getRandomChoice() {
