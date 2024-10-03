@@ -9,12 +9,12 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 // Function to get a cookie value by name
-function getCookie(cname) {
+function getCookie(cname ) {
   const name = cname + "=";
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(';');
   for (let i = 0; i < ca.length; i++) {
-    let c = ca[i].trim();
+    let c = ca[i].trim(); // takes away unnecessary spaces
     if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
@@ -22,12 +22,12 @@ function getCookie(cname) {
   return "";
 }
 
-// Initialize scores from cookies or set default to 0
+// gets scores from cookies, if they do not exist the value is set to 0.
 let scoreW = parseInt(getCookie("scoreW")) || 0;
 let scoreL = parseInt(getCookie("scoreL")) || 0;
 let scoreD = parseInt(getCookie("scoreD")) || 0;
 
-// Get display elements from the DOM
+// Get display elements from the documents
 const spelareDisplay = document.getElementById("spelareDisplay");
 const datorDisplay = document.getElementById("datorDisplay");
 const resultatDisplay = document.getElementById("resultatDisplay");
@@ -35,7 +35,7 @@ const resultatW = document.getElementById("resultatW");
 const resultatL = document.getElementById("resultatL");
 const resultatD = document.getElementById("resultatD");
 
-// Function to generate a random computer choice
+// Function to generate a random computer choice from array choices
 function getRandomChoice() {
   return choices[Math.floor(Math.random() * choices.length)];
 }
@@ -55,9 +55,12 @@ function scoreUpdate(resultat) {
 }
 
 // Function to display the result and score
-function displayResult(spelareVal, datorVal, result) {
-  spelareDisplay.innerHTML = `Du valde: ${spelareVal}`;
-  datorDisplay.innerHTML = `Datorn valde: ${datorVal}`;
+function displayResult(spelareVal="", datorVal="", result="") {
+  spelareDisplay.innerHTML = spelareVal ? `SPELARE: ${spelareVal}` : "SPELARE";
+  datorDisplay.innerHTML = datorVal? `DATOR: ${datorVal}` : "DATOR";
+
+
+
   resultatDisplay.innerHTML = result;
   resultatW.innerHTML = `Antal vinster: ${scoreW}`;
   resultatL.innerHTML = `Antal förluster: ${scoreL}`;
@@ -88,3 +91,4 @@ function playGame(spelareVal) {
   // Display the updated result and score
   displayResult(spelareVal, datorVal, result);
 }
+displayResult();
